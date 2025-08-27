@@ -1,0 +1,43 @@
+{
+  "name": "habit-tracker",
+  "version": "1.0.0",
+  "description": "A beautiful, modern web application for tracking personal habits and achieving goals",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx http-server -p 3000 -o",
+    "dev": "npx live-server --port=3000",
+    "build": "echo 'No build process required - static HTML/CSS/JS application'"
+  },
+  "keywords": [
+    "habit-tracker",
+    "goals",
+    "productivity",
+    "personal-development",
+    "web-app",
+    "javascript",
+    "html5",
+    "css3"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/habit-tracker.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/habit-tracker/issues"
+  },
+  "homepage": "https://github.com/yourusername/habit-tracker#readme",
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "live-server": "^1.2.2"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+} 

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HabitTracker - Personal Goals & Habits</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1><i class="fas fa-chart-line"></i> HabitTracker</h1>
+                <p>Track your habits, achieve your goals</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard Overview -->
+            <section class="dashboard">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-fire"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="currentStreak">0</h3>
+                            <p>Current Streak</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalHabits">0</h3>
+                            <p>Active Habits</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="completedToday">0</h3>
+                            <p>Completed Today</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-target"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="goalProgress">0%</h3>
+                            <p>Goal Progress</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Add New Habit Section -->
+            <section class="add-habit-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-plus-circle"></i> Add New Habit</h2>
+                </div>
+                <form id="habitForm" class="habit-form">
+                    <div class="form-group">
+                        <label for="habitName">Habit Name</label>
+                        <input type="text" id="habitName" placeholder="e.g., Morning Exercise" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="habitDescription">Description</label>
+                        <textarea id="habitDescription" placeholder="Describe your habit..."></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="habitCategory">Category</label>
+                            <select id="habitCategory" required>
+                                <option value="">Select Category</option>
+                                <option value="health">Health & Fitness</option>
+                                <option value="productivity">Productivity</option>
+                                <option value="learning">Learning</option>
+                                <option value="mindfulness">Mindfulness</option>
+                                <option value="social">Social</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="habitFrequency">Frequency</label>
+                            <select id="habitFrequency" required>
+                                <option value="">Select Frequency</option>
+                                <option value="daily">Daily</option>
+                                <option value="weekly">Weekly</option>
+                                <option value="monthly">Monthly</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="habitGoal">Goal (times per period)</label>
+                            <input type="number" id="habitGoal" min="1" value="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="habitColor">Color Theme</label>
+                            <input type="color" id="habitColor" value="#4CAF50">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Add Habit
+                    </button>
+                </form>
+            </section>
+
+            <!-- Habits List Section -->
+            <section class="habits-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-list"></i> Your Habits</h2>
+                    <div class="filter-controls">
+                        <select id="categoryFilter">
+                            <option value="">All Categories</option>
+                            <option value="health">Health & Fitness</option>
+                            <option value="productivity">Productivity</option>
+                            <option value="learning">Learning</option>
+                            <option value="mindfulness">Mindfulness</option>
+                            <option value="social">Social</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <select id="statusFilter">
+                            <option value="">All Status</option>
+                            <option value="active">Active</option>
+                            <option value="completed">Completed</option>
+                            <option value="overdue">Overdue</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="habitsList" class="habits-list">
+                    <!-- Habits will be dynamically added here -->
+                </div>
+            </section>
+
+            <!-- Goals Section -->
+            <section class="goals-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-bullseye"></i> Goals</h2>
+                    <button id="addGoalBtn" class="btn btn-secondary">
+                        <i class="fas fa-plus"></i> Add Goal
+                    </button>
+                </div>
+                <div id="goalsList" class="goals-list">
+                    <!-- Goals will be dynamically added here -->
+                </div>
+            </section>
+
+            <!-- Progress Charts Section -->
+            <section class="charts-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-chart-bar"></i> Progress Analytics</h2>
+                </div>
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <h3>Weekly Progress</h3>
+                        <canvas id="weeklyChart"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Category Distribution</h3>
+                        <canvas id="categoryChart"></canvas>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Add Goal Modal -->
+    <div id="goalModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-bullseye"></i> Add New Goal</h3>
+                <span class="close">&times;</span>
+            </div>
+            <form id="goalForm" class="goal-form">
+                <div class="form-group">
+                    <label for="goalTitle">Goal Title</label>
+                    <input type="text" id="goalTitle" placeholder="e.g., Read 12 books this year" required>
+                </div>
+                <div class="form-group">
+                    <label for="goalDescription">Description</label>
+                    <textarea id="goalDescription" placeholder="Describe your goal..."></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="goalTarget">Target Value</label>
+                        <input type="number" id="goalTarget" min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="goalUnit">Unit</label>
+                        <input type="text" id="goalUnit" placeholder="e.g., books, miles, hours" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="goalDeadline">Deadline</label>
+                        <input type="date" id="goalDeadline" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="goalColor">Color Theme</label>
+                        <input type="color" id="goalColor" value="#2196F3">
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelGoal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add Goal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Success/Error Messages -->
+    <div id="messageContainer" class="message-container"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html> 
