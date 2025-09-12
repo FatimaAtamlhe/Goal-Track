@@ -8,7 +8,7 @@ class HabitTracker {
         
         this.init();
     }
-
+    
     init() {
         this.setupEventListeners();
         this.renderDashboard();
@@ -668,4 +668,5 @@ class HabitTracker {
 let habitTracker;
 document.addEventListener('DOMContentLoaded', () => {
     habitTracker = new HabitTracker();
+
 }); 
