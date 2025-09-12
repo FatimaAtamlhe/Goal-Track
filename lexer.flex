@@ -53,4 +53,5 @@ HTML_ENTITY = "&"[A-Za-z0-9#]+";"
 
 .                   { return symbol(sym.error, "Unexpected character: " + yytext()); }
 
+
 <<EOF>>             { return symbol(sym.EOF); }
