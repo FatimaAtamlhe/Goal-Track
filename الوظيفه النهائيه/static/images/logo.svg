@@ -1,0 +1,19 @@
+<svg width="200" height="60" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Circle -->
+  <circle cx="30" cy="30" r="25" fill="#3498db" stroke="#2980b9" stroke-width="2"/>
+  
+  <!-- Target Icon -->
+  <circle cx="30" cy="30" r="18" fill="none" stroke="white" stroke-width="2"/>
+  <circle cx="30" cy="30" r="12" fill="none" stroke="white" stroke-width="2"/>
+  <circle cx="30" cy="30" r="6" fill="white"/>
+  
+  <!-- Progress Arrow -->
+  <path d="M35 20 L45 25 L40 30 L45 35 L35 30 Z" fill="#27ae60"/>
+  
+  <!-- Text -->
+  <text x="70" y="25" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#2c3e50">GoalTrack</text>
+  <text x="70" y="45" font-family="Arial, sans-serif" font-size="12" fill="#7f8c8d">Track Your Success</text>
+</svg>
+
+
+

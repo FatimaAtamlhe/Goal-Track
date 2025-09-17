@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>GoalTrack - Your Personal Habit & Goal Tracker</title>
+	<style>
+		body { 
+			font-family: Arial, sans-serif; 
+			max-width: 1200px; 
+			margin: 2rem auto; 
+			padding: 0 1rem; 
+			background: #f5f5f5;
+		}
+		.header {
+			background: #2c3e50;
+			color: white;
+			padding: 2rem;
+			text-align: center;
+			border-radius: 10px;
+			margin-bottom: 2rem;
+		}
+		.container {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 2rem;
+		}
+		.form-section {
+			background: white;
+			padding: 2rem;
+			border-radius: 10px;
+			box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+		}
+		.dashboard {
+			grid-column: 1 / -1;
+			background: white;
+			padding: 2rem;
+			border-radius: 10px;
+			box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+		}
+		form { display: grid; gap: 1rem; }
+		label { font-weight: bold; }
+		input, textarea, select { 
+			padding: 0.75rem; 
+			border: 1px solid #ddd; 
+			border-radius: 5px;
+		}
+		button { 
+			padding: 0.75rem 1.5rem; 
+			background: #3498db; 
+			color: white; 
+			border: none; 
+			border-radius: 5px; 
+			cursor: pointer;
+			font-size: 1rem;
+		}
+		button:hover { background: #2980b9; }
+		.logout-btn {
+			background: #e74c3c;
+			float: right;
+			padding: 0.5rem 1rem;
+		}
+		.logout-btn:hover { background: #c0392b; }
+		.habits-grid, .goals-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+			gap: 1rem;
+			margin: 1rem 0;
+		}
+		.habit-card, .goal-card {
+			background: #f8f9fa;
+			padding: 1rem;
+			border-radius: 8px;
+			border-left: 4px solid #3498db;
+		}
+		.progress-bar {
+			background: #eee;
+			height: 8px;
+			border-radius: 4px;
+			overflow: hidden;
+			margin: 0.5rem 0;
+		}
+		.progress-fill {
+			background: #27ae60;
+			height: 100%;
+			transition: width 0.3s ease;
+		}
+		.actions {
+			margin-top: 1rem;
+		}
+		.actions a {
+			display: inline-block;
+			margin-right: 0.5rem;
+			padding: 0.25rem 0.75rem;
+			background: #3498db;
+			color: white;
+			text-decoration: none;
+			border-radius: 3px;
+			font-size: 0.9rem;
+		}
+		.actions a:hover { background: #2980b9; }
+		.create-buttons {
+			text-align: center;
+			margin: 2rem 0;
+		}
+		.create-buttons a {
+			display: inline-block;
+			margin: 0 1rem;
+			padding: 1rem 2rem;
+			background: #27ae60;
+			color: white;
+			text-decoration: none;
+			border-radius: 8px;
+			font-weight: bold;
+		}
+		.create-buttons a:hover { background: #229954; }
+		.errorlist { color: #e74c3c; margin: 0; padding: 0; list-style: none; }
+		.success { color: #27ae60; background: #d5f4e6; padding: 1rem; border-radius: 5px; margin: 1rem 0; }
+		.footer {
+			background: #2c3e50;
+			color: white;
+			padding: 2rem;
+			text-align: center;
+			border-radius: 10px;
+			margin-top: 3rem;
+		}
+		.support-info {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 2rem;
+			margin: 1rem 0;
+		}
+		.support-item {
+			background: #34495e;
+			padding: 1rem;
+			border-radius: 8px;
+		}
+		.support-item h4 {
+			margin: 0 0 0.5rem 0;
+			color: #3498db;
+		}
+		.support-item a {
+			color: #3498db;
+			text-decoration: none;
+		}
+		.support-item a:hover {
+			text-decoration: underline;
+		}
+	</style>
+</head>
+<body>
+	<div class="header">
+		<div style="display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+			<!-- Logo -->
+			<div style="margin-right: 1rem;">
+				<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+					<circle cx="30" cy="30" r="25" fill="#3498db" stroke="#2980b9" stroke-width="2"/>
+					<circle cx="30" cy="30" r="18" fill="none" stroke="white" stroke-width="2"/>
+					<circle cx="30" cy="30" r="12" fill="none" stroke="white" stroke-width="2"/>
+					<circle cx="30" cy="30" r="6" fill="white"/>
+					<path d="M35 20 L45 25 L40 30 L45 35 L35 30 Z" fill="#27ae60"/>
+				</svg>
+			</div>
+			<div>
+				<h1 style="margin: 0; font-size: 2.5rem;">GoalTrack</h1>
+				<p style="margin: 0.5rem 0 0 0; font-size: 1.1rem; opacity: 0.9;">Your Personal Habit & Goal Tracking System</p>
+			</div>
+		</div>
+		{% if user.is_authenticated %}
+			<a href="/logout/" class="logout-btn">Logout</a>
+			<p>Welcome back, <strong>{{ user.username }}</strong>!</p>
+		{% endif %}
+	</div>
+
+	{% if messages %}
+		{% for message in messages %}
+			<div class="success">{{ message }}</div>
+		{% endfor %}
+	{% endif %}
+
+	{% if user.is_authenticated %}
+		<!-- Dashboard for logged-in users -->
+		<div class="dashboard">
+			<h2>📊 Your Dashboard</h2>
+			
+			<div class="create-buttons">
+				<a href="/habits/add/">➕ Add New Habit</a>
+				<a href="/goals/add/">🎯 Add New Goal</a>
+			</div>
+
+			<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+				<!-- Habits Section -->
+				<div>
+					<h3>🏃‍♂️ Your Habits</h3>
+					{% if habits %}
+						<div class="habits-grid">
+							{% for habit in habits %}
+							<div class="habit-card">
+								<h4>{{ habit.title }}</h4>
+								<p>{{ habit.description|truncatewords:10 }}</p>
+								<p><strong>Frequency:</strong> {{ habit.get_frequency_display }}</p>
+								
+								<!-- Progress Bar -->
+								{% for item in progress_summary %}
+									{% if item.habit.id == habit.id %}
+										<div class="progress-bar">
+											<div class="progress-fill" style="width: {{ item.percent }}%;"></div>
+										</div>
+										<p><small>{{ item.completed }}/{{ item.total }} days ({{ item.percent }}%)</small></p>
+									{% endif %}
+								{% endfor %}
+								
+								<div class="actions">
+									<a href="/habits/{{ habit.id }}/progress/">📈 Progress</a>
+									<a href="/habits/{{ habit.id }}/progress/add/">✅ Add Today</a>
+									<a href="/habits/{{ habit.id }}/edit/">✏️ Edit</a>
+									<a href="/habits/{{ habit.id }}/delete/">🗑️ Delete</a>
+								</div>
+							</div>
+							{% endfor %}
+						</div>
+					{% else %}
+						<p>No habits yet. <a href="/habits/add/">Create your first habit!</a></p>
+					{% endif %}
+				</div>
+
+				<!-- Goals Section -->
+				<div>
+					<h3>🎯 Your Goals</h3>
+					{% if goals %}
+						<div class="goals-grid">
+							{% for goal in goals %}
+							<div class="goal-card">
+								<h4>{{ goal.title }}</h4>
+								<p>{{ goal.description|truncatewords:10 }}</p>
+								<p><strong>Target Date:</strong> {{ goal.target_date }}</p>
+								
+								<!-- Progress Bar -->
+								<div class="progress-bar">
+									<div class="progress-fill" style="width: {{ goal.progress_percentage }}%;"></div>
+								</div>
+								<p><strong>Progress:</strong> {{ goal.progress_percentage }}%</p>
+								
+								{% if goal.progress_notes %}
+								<p><strong>Notes:</strong> {{ goal.progress_notes|truncatewords:15 }}</p>
+								{% endif %}
+								
+								<p><strong>Status:</strong> 
+									<span style="color: {% if goal.is_completed %}#27ae60{% else %}#f39c12{% endif %};">
+										{{ goal.is_completed|yesno:"✅ Completed,🔄 Active" }}
+									</span>
+								</p>
+								
+								<div class="actions">
+									<a href="/goals/{{ goal.id }}/edit/">✏️ Edit</a>
+									<a href="/goals/{{ goal.id }}/delete/">🗑️ Delete</a>
+								</div>
+							</div>
+							{% endfor %}
+						</div>
+					{% else %}
+						<p>No goals yet. <a href="/goals/add/">Set your first goal!</a></p>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+
+	{% else %}
+		<!-- Login/Register forms for non-logged-in users -->
+		<div class="container">
+			<div class="form-section">
+				<h2>🔑 Login</h2>
+				<form method="post">
+					{% csrf_token %}
+					<input type="hidden" name="login" value="1">
+					{{ login_form.non_field_errors }}
+					<div>
+						<label for="id_username">Username</label>
+						{{ login_form.username }}
+						{{ login_form.username.errors }}
+					</div>
+					<div>
+						<label for="id_password">Password</label>
+						{{ login_form.password }}
+						{{ login_form.password.errors }}
+					</div>
+					<button type="submit">Login</button>
+				</form>
+			</div>
+
+			<div class="form-section">
+				<h2>📝 Register</h2>
+				<form method="post">
+					{% csrf_token %}
+					<input type="hidden" name="register" value="1">
+					{{ register_form.non_field_errors }}
+					<div>
+						<label for="id_username">Username</label>
+						{{ register_form.username }}
+						{{ register_form.username.errors }}
+					</div>
+					<div>
+						<label for="id_email">Email</label>
+						{{ register_form.email }}
+						{{ register_form.email.errors }}
+					</div>
+					<div>
+						<label for="id_password">Password</label>
+						{{ register_form.password }}
+						{{ register_form.password.errors }}
+					</div>
+					<div>
+						<label for="id_password_confirm">Confirm Password</label>
+						{{ register_form.password_confirm }}
+						{{ register_form.password_confirm.errors }}
+					</div>
+					<button type="submit">Create Account</button>
+				</form>
+			</div>
+		</div>
+	{% endif %}
+
+	<!-- Technical Support Footer -->
+	<div class="footer">
+		<h3>🛠️ Technical Support</h3>
+		<p>Need help? Contact our technical support team:</p>
+		
+		<div class="support-info">
+			<div class="support-item">
+				<h4>📧 Email Support</h4>
+				<p><a href="mailto:support@goaltrack.com">support@goaltrack.com</a></p>
+				<p><small>We respond within 24 hours</small></p>
+			</div>
+			
+			<div class="support-item">
+				<h4>📱 Phone Support</h4>
+				<p><a href="tel:+966501234567">+966 50 123 4567</a></p>
+				<p><small>Available 9 AM - 6 PM (Saudi Time)</small></p>
+			</div>
+		</div>
+		
+		<div style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #34495e;">
+			<p><strong>Version 1.0.0</strong> | Made with ❤️ for productivity enthusiasts</p>
+			<p><small>© 2024 GoalTrack. All rights reserved.</small></p>
+		</div>
+	</div>
+</body>
+</html>

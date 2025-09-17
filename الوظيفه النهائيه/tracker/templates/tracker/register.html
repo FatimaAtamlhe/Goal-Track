@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Register - GoalTrack</title>
+	<style>
+		body { font-family: Arial, sans-serif; max-width: 640px; margin: 2rem auto; padding: 0 1rem; }
+		form { display: grid; gap: 0.75rem; }
+		label { font-weight: bold; }
+		input { padding: 0.5rem; }
+		button { padding: 0.6rem 1rem; cursor: pointer; }
+		.errorlist { color: #b00020; margin: 0 0 0.5rem 0; list-style: none; padding: 0; }
+		.success { color: #0a7a28; }
+		nav a { margin-right: 1rem; }
+	</style>
+</head>
+<body>
+	<nav>
+		<a href="/">🏠 Home</a>
+		<a href="/login/">Login</a>
+		<a href="/register/">Register</a>
+	</nav>
+	
+	<!-- Logo -->
+	<div style="text-align: center; margin: 1rem 0;">
+		<svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" style="margin-bottom: 0.5rem;">
+			<circle cx="25" cy="25" r="20" fill="#3498db" stroke="#2980b9" stroke-width="2"/>
+			<circle cx="25" cy="25" r="15" fill="none" stroke="white" stroke-width="2"/>
+			<circle cx="25" cy="25" r="10" fill="none" stroke="white" stroke-width="2"/>
+			<circle cx="25" cy="25" r="5" fill="white"/>
+			<path d="M30 15 L38 20 L33 25 L38 30 L30 25 Z" fill="#27ae60"/>
+		</svg>
+	</div>
+	
+	<h1>Create your account</h1>
+	<form method="post">
+		{% csrf_token %}
+		{{ form.non_field_errors }}
+		<div>
+			<label for="id_username">Username</label>
+			{{ form.username }}
+			{{ form.username.errors }}
+		</div>
+		<div>
+			<label for="id_email">Email</label>
+			{{ form.email }}
+			{{ form.email.errors }}
+		</div>
+		<div>
+			<label for="id_password">Password</label>
+			{{ form.password }}
+			{{ form.password.errors }}
+		</div>
+		<div>
+			<label for="id_password_confirm">Confirm Password</label>
+			{{ form.password_confirm }}
+			{{ form.password_confirm.errors }}
+		</div>
+		<button type="submit">Sign up</button>
+	</form>
+</body>
+</html>
+

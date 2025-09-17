@@ -1,0 +1,19 @@
+<svg width="300" height="100" viewBox="0 0 300 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Circle -->
+  <circle cx="50" cy="50" r="40" fill="#3498db" stroke="#2980b9" stroke-width="3"/>
+  
+  <!-- Target Icon -->
+  <circle cx="50" cy="50" r="30" fill="none" stroke="white" stroke-width="3"/>
+  <circle cx="50" cy="50" r="20" fill="none" stroke="white" stroke-width="3"/>
+  <circle cx="50" cy="50" r="10" fill="white"/>
+  
+  <!-- Progress Arrow -->
+  <path d="M60 35 L80 45 L70 50 L80 55 L60 50 Z" fill="#27ae60"/>
+  
+  <!-- Text -->
+  <text x="120" y="40" font-family="Arial, sans-serif" font-size="36" font-weight="bold" fill="#2c3e50">GoalTrack</text>
+  <text x="120" y="65" font-family="Arial, sans-serif" font-size="16" fill="#7f8c8d">Your Personal Habit & Goal Tracking System</text>
+</svg>
+
+
+

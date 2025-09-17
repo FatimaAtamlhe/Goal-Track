@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Dashboard - GoalTrack</title>
+	<style>
+		body { font-family: Arial, sans-serif; max-width: 640px; margin: 2rem auto; padding: 0 1rem; }
+		nav a { margin-right: 1rem; }
+	</style>
+</head>
+<body>
+	<nav>
+		<a href="/">🏠 Home</a>
+		<a href="/dashboard/">Dashboard</a>
+		<a href="/logout/">Logout</a>
+	</nav>
+	<h1>Welcome, {{ username }}</h1>
+	<p>Your GoalTrack dashboard is ready.</p>
+
+	<h2>Your Habits Summary</h2>
+	<p>
+		<a href="/habits/">Manage Habits</a> ·
+		<a href="/goals/">Manage Goals</a>
+	</p>
+	<div>
+		{% if progress_summary %}
+			<ul>
+				{% for item in progress_summary %}
+				<li>
+					<strong>{{ item.habit.title }}</strong> — {{ item.completed }}/{{ item.total }} days ({{ item.percent }}%)
+					<div style="background:#eee;width:300px;height:12px;display:inline-block;vertical-align:middle;margin-left:8px;">
+						<div style="--pct: {{ item.percent|default:0 }}; background:#4caf50;height:12px;width: calc(var(--pct) * 1%);"></div>
+					</div>
+					<a href="/habits/{{ item.habit.id }}/progress/" style="margin-left:8px;">View</a>
+					<a href="/habits/{{ item.habit.id }}/progress/add/" style="margin-left:8px;">Add today</a>
+				</li>
+				{% endfor %}
+			</ul>
+		{% else %}
+			<p>No habits yet. <a href="/habits/add/">Create one</a>.</p>
+		{% endif %}
+	</div>
+</body>
+</html>
+

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Habits - GoalTrack</title>
+	<style>
+		body { font-family: Arial, sans-serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+		nav a { margin-right: 1rem; }
+		table { width: 100%; border-collapse: collapse; }
+		th, td { padding: 0.5rem; border-bottom: 1px solid #ddd; }
+	</style>
+</head>
+<body>
+	<nav>
+		<a href="/">🏠 Home</a>
+		<a href="/dashboard/">Dashboard</a>
+		<a href="/habits/">Habits</a>
+		<a href="/goals/">Goals</a>
+		<a href="/logout/">Logout</a>
+	</nav>
+	<h1>Your Habits</h1>
+	<p><a href="/habits/add/">+ Add Habit</a></p>
+	<table>
+		<thead>
+			<tr>
+				<th>Title</th>
+				<th>Frequency</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for habit in habits %}
+			<tr>
+				<td>{{ habit.title }}</td>
+				<td>{{ habit.get_frequency_display }}</td>
+				<td>
+					<a href="/habits/{{ habit.id }}/edit/">Edit</a>
+					|
+					<a href="/habits/{{ habit.id }}/delete/">Delete</a>
+				</td>
+			</tr>
+			{% empty %}
+			<tr><td colspan="3">No habits yet.</td></tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</body>
+</html>
+

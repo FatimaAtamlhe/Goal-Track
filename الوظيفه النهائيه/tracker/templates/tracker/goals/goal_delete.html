@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Delete Goal - GoalTrack</title>
+	<style>
+		body { font-family: Arial, sans-serif; max-width: 640px; margin: 2rem auto; padding: 0 1rem; }
+		nav a { margin-right: 1rem; }
+	</style>
+</head>
+<body>
+	<nav>
+		<a href="/">🏠 Home</a>
+		<a href="/dashboard/">Dashboard</a>
+		<a href="/habits/">Habits</a>
+		<a href="/goals/">Goals</a>
+		<a href="/logout/">Logout</a>
+	</nav>
+	<h1>Delete Goal</h1>
+	<p>Are you sure you want to delete "{{ goal.title }}"?</p>
+	<form method="post">
+		{% csrf_token %}
+		<button type="submit">Yes, delete</button>
+		<a href="/goals/">Cancel</a>
+	</form>
+</body>
+</html>
+

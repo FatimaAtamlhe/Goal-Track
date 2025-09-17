@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Goals - GoalTrack</title>
+	<style>
+		body { font-family: Arial, sans-serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+		nav a { margin-right: 1rem; }
+		table { width: 100%; border-collapse: collapse; }
+		th, td { padding: 0.5rem; border-bottom: 1px solid #ddd; }
+	</style>
+</head>
+<body>
+	<nav>
+		<a href="/">🏠 Home</a>
+		<a href="/dashboard/">Dashboard</a>
+		<a href="/habits/">Habits</a>
+		<a href="/goals/">Goals</a>
+		<a href="/logout/">Logout</a>
+	</nav>
+	<h1>Your Goals</h1>
+	<p><a href="/goals/add/">+ Add Goal</a></p>
+	<table>
+		<thead>
+			<tr>
+				<th>Title</th>
+				<th>Target Date</th>
+				<th>Progress</th>
+				<th>Status</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for goal in goals %}
+			<tr>
+				<td>{{ goal.title }}</td>
+				<td>{{ goal.target_date }}</td>
+				<td>
+					<div style="background:#eee;width:100px;height:8px;display:inline-block;vertical-align:middle;">
+						<div style="background:#3498db;height:8px;width: {{ goal.progress_percentage }}%;"></div>
+					</div>
+					<span style="margin-left:5px;">{{ goal.progress_percentage }}%</span>
+				</td>
+				<td>{{ goal.is_completed|yesno:"Completed,Active" }}</td>
+				<td>
+					<a href="/goals/{{ goal.id }}/edit/">Edit</a>
+					|
+					<a href="/goals/{{ goal.id }}/delete/">Delete</a>
+				</td>
+			</tr>
+			{% empty %}
+			<tr><td colspan="5">No goals yet.</td></tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</body>
+</html>
+

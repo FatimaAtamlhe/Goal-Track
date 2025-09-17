@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Add Progress - GoalTrack</title>
+	<style>
+		body { font-family: Arial, sans-serif; max-width: 640px; margin: 2rem auto; padding: 0 1rem; }
+		nav a { margin-right: 1rem; }
+		form { display: grid; gap: 0.75rem; }
+		label { font-weight: bold; }
+		input { padding: 0.5rem; }
+		button { padding: 0.6rem 1rem; cursor: pointer; }
+	</style>
+</head>
+<body>
+	<nav>
+		<a href="/">🏠 Home</a>
+		<a href="/dashboard/">Dashboard</a>
+		<a href="/habits/">Habits</a>
+		<a href="/goals/">Goals</a>
+		<a href="/logout/">Logout</a>
+	</nav>
+	<h1>Add Progress for {{ habit.title }}</h1>
+	<form method="post">
+		{% csrf_token %}
+		{{ form.non_field_errors }}
+		<div>
+			<label for="id_date">Date</label>
+			{{ form.date }}
+			{{ form.date.errors }}
+		</div>
+		<div>
+			<label for="id_status">Completed?</label>
+			{{ form.status }}
+			{{ form.status.errors }}
+		</div>
+		<button type="submit">Save</button>
+	</form>
+</body>
+</html>
+

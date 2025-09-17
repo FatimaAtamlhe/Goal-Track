@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Habit Progress - GoalTrack</title>
+	<style>
+		body { font-family: Arial, sans-serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+		nav a { margin-right: 1rem; }
+		table { width: 100%; border-collapse: collapse; }
+		th, td { padding: 0.5rem; border-bottom: 1px solid #ddd; }
+	</style>
+</head>
+<body>
+	<nav>
+		<a href="/">🏠 Home</a>
+		<a href="/dashboard/">Dashboard</a>
+		<a href="/habits/">Habits</a>
+		<a href="/goals/">Goals</a>
+		<a href="/logout/">Logout</a>
+	</nav>
+	<h1>Progress for {{ habit.title }}</h1>
+	<p><a href="/habits/{{ habit.id }}/progress/add/">+ Add Progress</a></p>
+	<table>
+		<thead>
+			<tr>
+				<th>Date</th>
+				<th>Status</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for entry in entries %}
+			<tr>
+				<td>{{ entry.date }}</td>
+				<td>{{ entry.status|yesno:"Completed,Not completed" }}</td>
+			</tr>
+			{% empty %}
+			<tr><td colspan="2">No progress yet.</td></tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</body>
+</html>
+
